@@ -36,6 +36,8 @@ public class Cell {
      */
     private Map<Direction, Cell> neighborCells = new EnumMap<>(Direction.class);
 
+    public int countNeibhor() {return neighborCells.size();}
+
     public Cell neighborCell(@NotNull Direction direction) {
         return neighborCells.get(direction);
     }

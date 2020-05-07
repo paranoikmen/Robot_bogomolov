@@ -1,6 +1,7 @@
-package robots.labirint;
+package Mygame.labirint;
 
-import robots.labirints.Labirint;
+import Mygame.*;
+import Mygame.labirints.Labirint;
 
 public class TestLabirint extends Labirint {
 
@@ -25,9 +26,9 @@ public class TestLabirint extends Labirint {
 
     @Override
     protected void addRobots() {
-        Robot firstRobot = new Robot();
+        Robot firstRobot = new PlayerRobot();
 
-        Robot secondRobot = new Robot();
+        Robot secondRobot = new IRobot();
 
 
         field.getCell(new Point(0,2)).setRobot(firstRobot);

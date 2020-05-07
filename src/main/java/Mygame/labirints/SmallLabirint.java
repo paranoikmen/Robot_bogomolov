@@ -25,13 +25,13 @@ public class SmallLabirint extends Labirint {
 
     @Override
     protected void addRobots() {
-        Robot firstRobot = new PlayerRobot();
+        Robot playerRobot = new PlayerRobot();
 
-        Robot secondRobot = new IRobot();
+        Robot IIRobot = new IRobot();
 
 
-        field.getCell(new Point(0,2)).setRobot(firstRobot);
-        field.getCell(new Point(2,0)).setRobot(secondRobot);
+        field.getCell(new Point(0,2)).setRobot(playerRobot);
+        field.getCell(new Point(2,0)).setRobot(IIRobot);
     }
 
 

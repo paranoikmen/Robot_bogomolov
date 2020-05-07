@@ -19,7 +19,7 @@ public class ExitCell extends Cell {
         exitCellListListener.remove(listener);
     }
 
-    private void fireRobotIsTeleported(Robot robot) {
+    private void fireRobotIsExit(Robot robot) {
         for(ExitCellActionListener listener: exitCellListListener) {
             ExitCellActionEvent event = new ExitCellActionEvent(listener);
             event.setRobot(robot);

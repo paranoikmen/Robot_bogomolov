@@ -6,6 +6,8 @@ import Mygame.labirints.Labirint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 public class Game {
 
@@ -118,6 +120,64 @@ public class Game {
         activeRobot = robot;
 
         if(robot != null ) robot.setActive(true);
+    }
+
+    public Direction path() {
+        Direction direction = null;
+
+        Map<Point,Cell> cells = gameField.getCells();
+
+        List<Robot> robotsOnField = gameField.getRobotsOnField();
+        Cell playerRobot = null;
+        Cell IIRobot = null;
+        if(robotsOnField.get(0).getII()==false) {
+            playerRobot = robotsOnField.get(0).getPosition();
+            IIRobot = robotsOnField.get(1).getPosition();
+        }
+        else {
+            playerRobot = robotsOnField.get(1).getPosition();
+            IIRobot = robotsOnField.get(0).getPosition();
+        }
+
+
+        Stack<Cell> queue = new Stack<>();
+
+        queue.push(IIRobot);
+
+        Map<Cell, Boolean> used = null;
+        for(int i = 0;i<cells.size(); i++){
+            used.put(cells.get(i), false);
+        }
+
+        Map<Cell, Cell> p = null; // cell1 = сын, cell2 = предок
+
+        used.put(playerRobot, true);
+
+        p.put(playerRobot,playerRobot);
+
+        // todo учитывать стены
+
+        while(!queue.isEmpty()) {
+            Cell tmp = queue.pop();
+            Direction directionRight = Direction.WEST;
+            for(int i=0; i<4; i++) {
+                Cell neibhor = tmp.neighborCell(directionRight);
+                if(!neibhor.equals(null) || neibhor.neighborWall(directionRight).equals(null)) {
+                    if(used.get(neibhor).equals(false)) {
+                        used.put(neibhor, true);
+                        queue.push(neibhor);
+                        p.put(neibhor, playerRobot);
+                    }
+                }
+                direction = directionRight.getTurningRight();
+            }
+        }
+
+        if(used.get(IIRobot).equals(true)) {
+            direction = p.get(IIRobot).isNeighbor(p.get(p.get(IIRobot)));
+        }
+
+        return direction;
     }
 
     /** Events */

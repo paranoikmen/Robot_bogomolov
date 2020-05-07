@@ -48,6 +48,7 @@ public class Field {
     public Cell getCell(@NotNull Point point) {
         return cells.get(point);
     }
+    public Map<Point, Cell> getCells() {return cells;}
     public Cell getExitCell() { return cells.get(exitPoint); }
 
     public List<Robot> getRobotsOnField() {
@@ -91,7 +92,7 @@ public class Field {
 
         @Override
         public void robotIsExit(@NotNull ExitCellActionEvent event) {
-            fireRobotIsEXit(event.getRobot());
+            fireRobotIsExit(event.getRobot());
         }
     }
 

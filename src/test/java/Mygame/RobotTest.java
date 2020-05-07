@@ -1,14 +1,15 @@
-package robots;
+package Mygame;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import robots.event.RobotActionEvent;
-import robots.event.RobotActionListener;
+import Mygame.event.RobotActionEvent;
+import Mygame.event.RobotActionListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RobotTest {
@@ -48,7 +49,7 @@ class RobotTest {
         expectedEvents.clear();
 
         // create robot
-        robot = new Robot();
+        robot = new PlayerRobot();
         robot.setActive(true);
         robot.addRobotActionListener(new EventsListener());
 

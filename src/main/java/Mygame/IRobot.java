@@ -90,7 +90,7 @@ public class IRobot  extends Robot{
         if(II.equals(lastRobotCell))
             result = null;
         else {
-
+            //кратчайший путь
         }
         return result;
     }

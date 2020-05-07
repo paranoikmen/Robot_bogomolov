@@ -1,10 +1,10 @@
-package robots;
+package Mygame;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import robots.event.ExitCellActionEvent;
-import robots.event.ExitCellActionListener;
+import Mygame.event.ExitCellActionEvent;
+import Mygame.event.ExitCellActionListener;
 
 import java.util.Arrays;
 

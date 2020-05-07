@@ -1,10 +1,10 @@
-package robots;
+package Mygame;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import robots.event.FieldActionEvent;
-import robots.event.FieldActionListener;
+import Mygame.event.FieldActionEvent;
+import Mygame.event.FieldActionListener;
 
 import java.util.Arrays;
 

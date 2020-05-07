@@ -1,18 +1,17 @@
-package robots;
+package Mygame;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import robots.event.GameActionEvent;
-import robots.event.GameActionListener;
-import robots.labirint.TestLabirint;
-import robots.utils.Pare;
+import Mygame.event.GameActionEvent;
+import Mygame.event.GameActionListener;
+import Mygame.labirint.TestLabirint;
+import Mygame.utils.Pare;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
     private Game game;

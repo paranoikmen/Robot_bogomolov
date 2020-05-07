@@ -1,10 +1,9 @@
-package robots;
+package Mygame;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CellTest {
 
@@ -22,7 +21,7 @@ class CellTest {
 
     @Test
     public void test_setRobot_InEmptyCell() {
-        Robot robot = new Robot();
+        Robot robot = new PlayerRobot();
 
         cell.setRobot(robot);
 
@@ -32,7 +31,7 @@ class CellTest {
 
     @Test
     public void test_takeRobot_FromCellWithRobot() {
-        Robot robot = new Robot();
+        Robot robot = new PlayerRobot();
 
         cell.setRobot(robot);
 
@@ -44,8 +43,8 @@ class CellTest {
 
     @Test
     public void test_setRobot_ToCellWithRobot() {
-        Robot robot = new Robot();
-        Robot newRobot = new Robot();
+        Robot robot = new PlayerRobot();
+        Robot newRobot = new PlayerRobot();
 
         cell.setRobot(robot);
 

@@ -1,4 +1,4 @@
-package robots.utils;
+package Mygame.utils;
 
 import java.util.Objects;
 
