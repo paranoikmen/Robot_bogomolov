@@ -3,7 +3,6 @@ package Mygame.ui.cell;
 import org.jetbrains.annotations.NotNull;
 import Mygame.Direction;
 import Mygame.Robot;
-import Mygame.ui.utils.GameUtils;
 import Mygame.ui.utils.ImageUtils;
 
 import javax.imageio.ImageIO;

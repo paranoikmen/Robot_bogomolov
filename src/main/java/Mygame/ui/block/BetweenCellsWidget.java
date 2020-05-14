@@ -6,7 +6,7 @@ import Mygame.Orientation;
 import javax.swing.*;
 import java.awt.*;
 
-public class BetweenCellsWidget extends JPanel { // !!! До конца предназначение виджета не понял
+public class BetweenCellsWidget extends JPanel {
 
     private final Orientation orientation;
 
@@ -17,10 +17,9 @@ public class BetweenCellsWidget extends JPanel { // !!! До конца пред
         setBackground(Color.BLACK);
     }
 
-    public void addItem(@NotNull BlockWidget blockWidget) { // !!! Плохое название - могу много элементов добавить?
+    public void addItem(@NotNull BlockWidget blockWidget) {
         if(blockWidget.getOrientation() != orientation) throw new IllegalArgumentException();
-        add(blockWidget);                                   // !!! Что будет, если ориентация BetweenCellsWidget и BlockWidget не совпадают??
-        // DONE: Добавил проверку на несовпадение ориентаций.
+        add(blockWidget);
     }
 
     private Dimension getDimensionByOrientation() {
