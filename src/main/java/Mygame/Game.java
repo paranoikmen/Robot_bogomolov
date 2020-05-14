@@ -162,7 +162,7 @@ public class Game {
             Direction directionRight = Direction.WEST;
             for(int i=0; i<4; i++) {
                 Cell neibhor = tmp.neighborCell(directionRight);
-                if(!neibhor.equals(null) || neibhor.neighborWall(directionRight).equals(null)) {
+                if(!neibhor.equals(null) && neibhor.neighborWall(directionRight).equals(null)) {
                     if(used.get(neibhor).equals(false)) {
                         used.put(neibhor, true);
                         queue.push(neibhor);
