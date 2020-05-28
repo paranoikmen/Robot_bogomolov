@@ -1,4 +1,4 @@
-package Mygame;
+package robots;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,18 +16,6 @@ class BetweenCellsPositionTest {
     public void testSetup() {
         cell = new Cell();
         neighborCell = new Cell();
-    }
-
-    @Test
-    public void test_canWallSet_withTwoNeighborsCells() {
-        cell.setNeighbor(neighborCell, direction);
-
-        assertTrue(BetweenCellsPosition.canWallSet(cell, neighborCell));
-    }
-
-    @Test
-    public void test_canWallSet_withTwoNotNeighborsCells() {
-        assertFalse(BetweenCellsPosition.canWallSet(cell, neighborCell));
     }
 
     @Test

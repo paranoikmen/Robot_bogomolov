@@ -11,31 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ExitCell extends Cell {
-
-    private List<Robot> teleportedRobots = new ArrayList<>();
-
-    public List<Robot> getTeleportedRobots() {
-        return Collections.unmodifiableList(teleportedRobots);
-    }
-
-    @Override
-    public void setRobot(Robot robot) {
-        super.setRobot(robot);
-        if (BuildConfig.buildType == BuildConfig.BuildType.RELEASE) {
-            Timer timer = new Timer(1000, e -> teleportRobot());
-            timer.setRepeats(false);
-            timer.start();
-        } else {
-            teleportRobot();
-        }
-    }
-
-    private void teleportRobot() {
-        Robot robot = takeRobot();
-        teleportedRobots.add(robot);
-        fireRobotIsExit(robot);
-    }
-
+    
     // -------------------- События --------------------
     private ArrayList<ExitCellActionListener> exitCellListListener = new ArrayList<>();
 

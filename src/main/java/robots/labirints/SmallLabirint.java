@@ -21,16 +21,16 @@ public class SmallLabirint extends Labirint {
 
     @Override
     protected Point exitPoint() {
-        return new Point(2,2);
+        return new Point(5,5);
     }
 
     @Override
     protected void addRobots(@NotNull Field field) {
-        PlayerRobot firstRobot = new PlayerRobot();
-        IRobot secondRobot = new IRobot();
+        PlayerRobot playerRobot = new PlayerRobot();
+        IRobot II = new IRobot();
 
-        field.getCell(new Point(0,2)).setRobot(firstRobot);
-        field.getCell(new Point(2,0)).setRobot(secondRobot);
+        field.getCell(new Point(0,0)).setRobot(II);
+        field.getCell(new Point(0,2)).setRobot(playerRobot);
     }
 
 
@@ -40,6 +40,20 @@ public class SmallLabirint extends Labirint {
         BetweenCellsPosition betweenCellsPosition = new BetweenCellsPosition(
                 field.getCell(new Point(2, 0)),
                 field.getCell(new Point(2, 1))
+        );
+
+        new Wall(betweenCellsPosition);
+
+        betweenCellsPosition = new BetweenCellsPosition(
+                field.getCell(new Point(1, 0)),
+                field.getCell(new Point(1, 1))
+        );
+
+        new Wall(betweenCellsPosition);
+
+        betweenCellsPosition = new BetweenCellsPosition(
+                field.getCell(new Point(0, 0)),
+                field.getCell(new Point(0, 1))
         );
 
         new Wall(betweenCellsPosition);

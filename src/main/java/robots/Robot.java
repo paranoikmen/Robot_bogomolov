@@ -21,8 +21,6 @@ public abstract class Robot {
     }
 
     boolean setPosition(Cell position) {
-        if (position != null && !canLocateAtPosition(position)) return false;
-        if ((position instanceof ExitCell)) return false;
         this.position = position;
         return true;
     }
@@ -32,9 +30,9 @@ public abstract class Robot {
             Cell oldPosition = position;
             Cell newPosition = canMove(direction);
             if (newPosition != null) {
-                fireRobotIsMoved(oldPosition, newPosition);
                 position.takeRobot();
                 newPosition.setRobot(this);
+                fireRobotIsMoved(oldPosition, newPosition);
             }
         }
     }
@@ -61,16 +59,13 @@ public abstract class Robot {
         Cell result = null;
 
         Cell neighborCell = position.neighborCell(direction);
-        if (neighborCell != null && canLocateAtPosition(neighborCell) && position.neighborWall(direction) == null) {
+        if (neighborCell != null && position.neighborWall(direction) == null) {
             result = neighborCell;
         }
 
         return result;
     }
 
-    public static boolean canLocateAtPosition(@NotNull Cell position) {
-        return position.getRobot() == null;
-    }
 
     // -------------------- События --------------------
     private ArrayList<RobotActionListener> robotListListener = new ArrayList<>();

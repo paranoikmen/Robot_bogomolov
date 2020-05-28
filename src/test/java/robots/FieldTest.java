@@ -1,10 +1,10 @@
-package Mygame;
+package robots;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import Mygame.event.FieldActionEvent;
-import Mygame.event.FieldActionListener;
+import robots.event.FieldActionEvent;
+import robots.event.FieldActionListener;
 
 import java.util.Arrays;
 
@@ -17,8 +17,8 @@ public class FieldTest {
     class FieldObserver implements FieldActionListener {
 
         @Override
-        public void robotIsTeleported(@NotNull FieldActionEvent event) {
-            eventCount += 1;
+        public void robotIsExit(@NotNull FieldActionEvent event) {
+
         }
     }
 
@@ -81,7 +81,7 @@ public class FieldTest {
 
     @Test
     public void test_getRobotsOnField_oneRobot() {
-        Robot robot = new Robot();
+        Robot robot = new PlayerRobot();
         field.getCell(new Point(0, 0)).setRobot(robot);
 
         assertTrue(field.getRobotsOnField().contains(robot));
@@ -90,61 +90,12 @@ public class FieldTest {
 
     @Test
     public void test_getRobotsOnField_severalRobots() {
-        Robot robot = new Robot();
-        Robot anotherRobot = new Robot();
+        Robot robot = new PlayerRobot();
+        Robot anotherRobot = new IRobot();
         field.getCell(new Point(0, 0)).setRobot(robot);
         field.getCell(new Point(1, 0)).setRobot(anotherRobot);
 
         assertTrue(field.getRobotsOnField().containsAll(Arrays.asList(robot, anotherRobot)));
         assertEquals(2, field.getRobotsOnField().size());
-    }
-
-    @Test
-    public void test_getTeleportedRobots_empty() {
-        assertTrue(field.getTeleportedRobots().isEmpty());
-    }
-
-    @Test
-    public void test_TeleportedRobots_oneRobot() {
-        Robot robot = new Robot();
-        field.getCell(new Point(1, 1)).setRobot(robot);
-
-        assertTrue(field.getTeleportedRobots().contains(robot));
-        assertEquals(1, field.getTeleportedRobots().size());
-    }
-
-    @Test
-    public void test_TeleportedRobots_severalRobots() {
-        Robot robot = new Robot();
-        Robot anotherRobot = new Robot();
-        Cell exitCell =  field.getCell(new Point(1, 1));
-
-        exitCell.setRobot(robot);
-        exitCell.setRobot(anotherRobot);
-
-        assertTrue(field.getTeleportedRobots().containsAll(Arrays.asList(robot, anotherRobot)));
-        assertEquals(2, field.getTeleportedRobots().size());
-    }
-
-    @Test
-    public void test_teleportEvent_oneRobot() {
-        int expectedEventCount = 1;
-        Robot robot = new Robot();
-
-        field.getCell(new Point(1, 1)).setRobot(robot);
-
-        assertEquals(expectedEventCount, eventCount);
-    }
-
-    @Test
-    public void test_teleportEvent_TwoRobots() {
-        int expectedEventCount = 2;
-        Robot robot = new Robot();
-        Robot anotherRobot = new Robot();
-
-        field.getCell(new Point(1, 1)).setRobot(robot);
-        field.getCell(new Point(1, 1)).setRobot(anotherRobot);
-
-        assertEquals(expectedEventCount, eventCount);
     }
 }

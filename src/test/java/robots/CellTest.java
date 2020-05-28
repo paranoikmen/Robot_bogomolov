@@ -1,7 +1,9 @@
-package Mygame;
+package robots;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import javax.swing.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,22 +42,6 @@ class CellTest {
         assertNull(cell.getRobot());
     }
 
-
-    @Test
-    public void test_setRobot_ToCellWithRobot() {
-        Robot robot = new PlayerRobot();
-        Robot newRobot = new PlayerRobot();
-
-        cell.setRobot(robot);
-
-        assertThrows(IllegalArgumentException.class, () -> cell.setRobot(newRobot));
-        assertEquals(robot, cell.getRobot());
-        assertEquals(cell, robot.getPosition());
-        assertNull(newRobot.getPosition());
-    }
-
-
-
     @Test
     public void test_setNeighborCell() {
         Cell neighborCell = new Cell();
@@ -74,7 +60,7 @@ class CellTest {
         Direction direction = Direction.NORTH;
 
         cell.setNeighbor(neighborCell, direction);
-        neighborCell.setNeighbor(cell, direction.getOppositeDirection());
+        assertThrows(IllegalArgumentException.class, () -> neighborCell.setNeighbor(cell, direction.getOppositeDirection()));
         assertEquals(neighborCell, cell.neighborCell(direction));
         assertEquals(cell, neighborCell.neighborCell(direction.getOppositeDirection()));
     }
@@ -89,6 +75,26 @@ class CellTest {
         assertThrows(IllegalArgumentException.class, () -> cell.setNeighbor(anotherCell, direction));
         assertEquals(neighborCell, cell.neighborCell(direction));
         assertEquals(cell, neighborCell.neighborCell(direction.getOppositeDirection()));
+    }
+
+    @Test
+    public void test_setNeighborCell_alreadyNeighborWithAnotherDirection() {
+        Cell neighborCell = new Cell();
+        Direction direction = Direction.NORTH;
+        Direction anotherDirection = Direction.SOUTH;
+
+        cell.setNeighbor(neighborCell, direction);
+        assertThrows(IllegalArgumentException.class, () -> cell.setNeighbor(neighborCell, anotherDirection));
+        assertEquals(neighborCell, cell.neighborCell(direction));
+        assertEquals(cell, neighborCell.neighborCell(direction.getOppositeDirection()));
+    }
+
+    @Test
+    public void test_setNeighborCell_setSelfAsNeighbor() {
+        Direction direction = Direction.NORTH;
+
+        assertThrows(IllegalArgumentException.class, () -> cell.setNeighbor(cell, direction));
+        assertNull(cell.neighborCell(direction));
     }
 
     @Test
@@ -110,10 +116,10 @@ class CellTest {
     @Test
     public void test_setNeighbor_Wall() {
         Direction direction = Direction.NORTH;
-        Wall neighborWall = new Wall(new BetweenCellsPosition(cell, direction));
+        Wall neighborWallSegment = new Wall(new BetweenCellsPosition(cell, direction));
 
-        assertEquals(neighborWall, cell.neighborWall(direction));
-        assertEquals(cell, neighborWall.getPosition().getNeighborCells().get(direction.getOppositeDirection()));
+        assertEquals(neighborWallSegment, cell.neighborWall(direction));
+        assertEquals(cell, neighborWallSegment.getPosition().getNeighborCells().get(direction.getOppositeDirection()));
     }
 
     @Test

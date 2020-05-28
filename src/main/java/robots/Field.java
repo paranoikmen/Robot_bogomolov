@@ -14,8 +14,14 @@ public class Field {
 
     private final int width;
     private final int height;
+    private PathFinder pathFinder;
 
     private final Cell exitCell;
+
+    public void setPathFinder(PathFinder pathFinder) {
+        this.pathFinder = pathFinder;
+    }
+    public PathFinder getPathFinder() { return pathFinder; }
 
     public Field(int width, int height, @NotNull Point exitPoint) {
         if(width <= 0) throw new IllegalArgumentException("Field width must be more than 0");
@@ -57,7 +63,7 @@ public class Field {
         return cells.get(point);
     }
     public Map<Point, Cell> getCells() {return cells;}
-    public List<Robot> getTeleportedRobots() { return ((ExitCell) exitCell).getTeleportedRobots(); }
+    //public List<Robot> getTeleportedRobots() { return ((ExitCell) exitCell).getTeleportedRobots(); }
 
     public Cell getExitCell() { return exitCell; }
 

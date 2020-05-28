@@ -98,13 +98,20 @@ public class RobotWidget extends CellItemWidget {
 
         private void skipStepAction(@NotNull int keyCode) {
             if(keyCode == KeyEvent.VK_F) {
-                robot.skipStep();
+                if(!robot.getII()){
+                    robot.skipStep();
+                }
+                if(robot.getII()) {
+                    iRobot = (IRobot) robot;
+                    iRobot.move();
+                }
             }
         }
 
         private void moveAction(@NotNull int keyCode){
             Direction direction = directionByKeyCode(keyCode);
             System.out.println(color + " go to " + direction);
+            Robot tmp = robot;
 
             if(direction != null && robot.isActive()) {
                 if(!robot.getII()){
@@ -114,7 +121,6 @@ public class RobotWidget extends CellItemWidget {
                 if(robot.getII()) {
                     iRobot = (IRobot) robot;
                     iRobot.move();
-
                 }
             }
         }

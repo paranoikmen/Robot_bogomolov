@@ -22,7 +22,7 @@ public class Main {
 
         private Game game;
         private WidgetFactory widgetFactory;
-        private PathFinder pathFinder = new PathFinder();
+
 
         public GamePanel() throws HeadlessException {
             setVisible(true);
@@ -41,7 +41,6 @@ public class Main {
             setResizable(false);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-            pathFinder.setGame(game);
         }
 
         private final class GameController implements GameActionListener {
@@ -65,12 +64,17 @@ public class Main {
             public void gameStatusChanged(@NotNull GameActionEvent event) {
                 GameStatus status = event.getStatus();
                 switch (status) {
-                    case WINNER_FOUND:
-                        JOptionPane.showMessageDialog(GamePanel.this, "Выйграл робот: " +
-                                GameUtils.colorName(widgetFactory.getWidget(game.getWinner()).getColor()));
+                    case WIN_IS_PLAYER:
+                        JOptionPane.showMessageDialog(GamePanel.this, "Выйграло человечество");
+                        break;
+                    case WIN_IS_II:
+                        JOptionPane.showMessageDialog(GamePanel.this, "Выйграл Скайнет");
                         break;
                     case GAME_ABORTED:
                         JOptionPane.showMessageDialog(GamePanel.this, "Игра завершена досрочно");
+                        break;
+                    case DRAW:
+                        JOptionPane.showMessageDialog(GamePanel.this, "Ничья(");
                         break;
 
                 }

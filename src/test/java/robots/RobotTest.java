@@ -1,16 +1,15 @@
-package Mygame;
+package robots;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import Mygame.event.RobotActionEvent;
-import Mygame.event.RobotActionListener;
+import robots.event.RobotActionEvent;
+import robots.event.RobotActionListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RobotTest {
 
@@ -27,18 +26,19 @@ class RobotTest {
         }
 
         @Override
-        public void robotIsSkipStep(@NotNull RobotActionEvent event) {
+        public void robotSkippedStep(@NotNull RobotActionEvent event) {
             events.add(EVENT.ROBOT_SKIP_STEP);
+        }
+
+        @Override
+        public void robotActivityChanged(@NotNull RobotActionEvent event) {
+            // Not implemented yet
         }
     }
 
     private Cell cell;
     private Cell neighborCell;
     private final Direction direction = Direction.NORTH;
-
-    private final static int DEFAULT_TEST_BATTERY_CHARGE = 10;
-    private static final int AMOUNT_OF_CHARGE_FOR_MOVE = 1;
-    private static final int AMOUNT_OF_CHARGE_FOR_SKIP_STEP = 2;
 
     private Robot robot;
 
@@ -67,21 +67,19 @@ class RobotTest {
         assertTrue(events.isEmpty());
     }
 
-    @Test
-    public void test_canStayAtPosition_emptyCell() {
-        assertTrue(Robot.canStayAtPosition(cell));
-        assertTrue(events.isEmpty());
-    }
 
     @Test
-    public void test_canStayAtPosition_cellWithRobot() {
+    public void test_skipStep_robotActive() {
         cell.setRobot(robot);
 
-        assertFalse(Robot.canStayAtPosition(cell));
-        assertTrue(events.isEmpty());
-    }
+        robot.skipStep();
 
+        expectedEvents.add(EVENT.ROBOT_SKIP_STEP);
+
+        assertEquals(cell, robot.getPosition());
+        assertEquals(robot, cell.getRobot());
+        assertEquals(expectedEvents, events);
+    }
 
 
 }
-

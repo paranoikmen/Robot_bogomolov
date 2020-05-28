@@ -13,7 +13,7 @@ public class Game {
     private Robot activeRobot;
     private Robot winner;
     private Field gameField;
-    private PathFinder pathFinder;
+    private PathFinder pathFinder = new PathFinder();
 
     public Game(Labirint labirint) {
         initGame(labirint);
@@ -60,10 +60,6 @@ public class Game {
 
     public Field getGameField() { return gameField; }
 
-    public void setPathFinder(PathFinder pathFinder) {
-        this.pathFinder = pathFinder;
-    }
-    public PathFinder getPathFinder() { return pathFinder; }
 
     private void passMoveNextRobot() {
         if(gameStatus != GameStatus.GAME_IS_ON) {
@@ -76,7 +72,8 @@ public class Game {
         if(robotsOnField.size() == 1 ) {
             Robot robot = robotsOnField.get(0);
             setActiveRobot(robot);
-        } else if (robotsOnField.size() == 2) {
+        }
+        else if (robotsOnField.size() == 2) {
             Robot firstRobot = robotsOnField.get(0);
             Robot secondRobot = robotsOnField.get(1);
             if(!firstRobot.isActive()) {
@@ -88,53 +85,44 @@ public class Game {
     }
 
     private GameStatus determineOutcomeGame() {
-
         GameStatus result = GameStatus.GAME_IS_ON;
-
-            List<Robot> teleportedRobots = gameField.getTeleportedRobots();
-
-        if(teleportedRobots.size() == 1) {
-            setWinner(teleportedRobots.get(0));
-            result = GameStatus.WINNER_FOUND;
-        }
-
-        return result;
-
-        /*
-        GameStatus result = GameStatus.GAME_IS_ON;
-
         List<Robot> robotsOnField = gameField.getRobotsOnField();
 
-        Robot firstRobot = null;
-        Robot secondRobot = null;
+        if(robotsOnField.size() == 2) {
+            IRobot II = null;
+            PlayerRobot playerRobot = null;
 
-        if(robotsOnField.size() == 1 ) {
-            Robot robot = robotsOnField.get(0);
-            setActiveRobot(robot);
-        } else if (robotsOnField.size() == 2) {
-            firstRobot = robotsOnField.get(0);
-            secondRobot = robotsOnField.get(1);
+            if(robotsOnField.get(0).getII()) {
+                II = (IRobot) robotsOnField.get(0);
+                playerRobot = (PlayerRobot) robotsOnField.get(1);
+            }
+            else if(!robotsOnField.get(0).getII()) {
+                II = (IRobot) robotsOnField.get(1);
+                playerRobot = (PlayerRobot) robotsOnField.get(0);
+            }
 
+            if(playerRobot.getPosition().equals(gameField.getExitCell())) {
+                setWinner(playerRobot);
+                result = GameStatus.WIN_IS_PLAYER;
+            }
         }
-
-        if(firstRobot.getPosition().equals(gameField.getExitCell())) {
-            setWinner(firstRobot);
-            result = GameStatus.WINNER_FOUND;
-        }
-        else if(secondRobot.getPosition().equals(gameField.getExitCell())) {
-            setWinner(secondRobot);
-            result = GameStatus.WINNER_FOUND;
+        else if(robotsOnField.size()==1) {
+            if(robotsOnField.get(0).getPosition().equals(gameField.getExitCell())) {
+                result = GameStatus.DRAW;
+            }
+            else {
+                result = GameStatus.WIN_IS_II;
+            }
         }
 
         return result;
-
-         */
     }
 
 
 
     private void buildField(@NotNull Labirint labirint) {
         gameField = labirint.buildField();
+        pathFinder.setField(getGameField());
     }
 
     private void setWinner(@NotNull Robot robot) {
@@ -157,10 +145,12 @@ public class Game {
         @Override
         public void robotIsMoved(@NotNull RobotActionEvent event) {
             fireRobotIsMoved(event.getRobot());
-            if(!(event.getToCell() instanceof ExitCell)){
-                setStatus(determineOutcomeGame());
+            GameStatus gameStatus = determineOutcomeGame();
+            setStatus(gameStatus);
+            if(gameStatus==GameStatus.GAME_IS_ON) {
+                passMoveNextRobot();
             }
-            passMoveNextRobot();
+
         }
 
         @Override
